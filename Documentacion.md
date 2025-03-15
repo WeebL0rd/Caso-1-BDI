@@ -338,8 +338,7 @@ diaria, semanal)
 ## **Diseño del sistema de subscripciones**
 
 ![A screenshot of a computer AI-generated content may be
-incorrect.](imagenes/media/image1.png){width="5.761220472440945in"
-height="2.958746719160105in"}
+incorrect.](imagenes/media/image1.png)
 
 Cada subscripción que se ingrese en el sistema se define en la tabla de
 [subscriptions]{.underline}, donde se almacena una descripción del plan,
@@ -363,8 +362,7 @@ la imagen, el plan "Básico" otorga 10Gb de espacio en el disco y 100Gb
 en la subscripción "Profesional".
 
 ![Predyctics - Software \| Business
-Intelligence](imagenes/media/image2.jpeg){width="3.808695319335083in"
-height="2.286033464566929in"}
+Intelligence](imagenes/media/image2.jpeg)
 
 [plan_prices]{.underline} es la tabla que maneja los precios de las
 subscripciones, el tipo de moneda, la fecha de inicio y finalización de
@@ -384,8 +382,7 @@ la recurrencia de la subscripción.
 ## **Métodos de pago y APIs**
 
 ![A screen shot of a computer AI-generated content may be
-incorrect.](imagenes/media/image3.png){width="6.5in"
-height="2.077777777777778in"}
+incorrect.](imagenes/media/image3.png)
 
 La tabla [api_integrations]{.underline} es la que almacena información
 sobre los servicios externos del sistema, en este caso los procesadores
@@ -412,8 +409,7 @@ con la tabla [pay_pay_methods]{.underline}.
 ## **Pagos** 
 
 ![A screenshot of a computer AI-generated content may be
-incorrect.](imagenes/media/image4.png){width="2.0419520997375327in"
-height="3.9901399825021873in"}
+incorrect.](imagenes/media/image4.png)
 
 Cada pago procesado por el sistema se almacena en la tabla. Siempre se
 van a almacenar datos como el monto, la fecha del pago, la moneda
@@ -435,8 +431,7 @@ autenticación (auth, reference) y tokens de seguridad (change_token).
 ## **Transacciones**
 
 ![A screenshot of a computer program AI-generated content may be
-incorrect.](imagenes/media/image5.png){width="3.8963768591426073in"
-height="4.708990594925634in"}
+incorrect.](imagenes/media/image5.png)
 
 Cada pago siempre se va a referenciar a una transacción, la cual maneja
 su propia fecha y estado, ya que puede que un pago no esté confirmado,
