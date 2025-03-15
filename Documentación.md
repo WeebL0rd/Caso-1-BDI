@@ -1,1 +1,1 @@
-<iframe src="Diagrama Caso1.pdf" width="100%" height="600px"></iframe>
+[Ver el documento](Diagrama_Caso1.pdf)
