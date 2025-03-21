@@ -67,9 +67,19 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Inserción de currencies
+INSERT INTO pay_currencies (`name`, acronym, symbol, country_id) VALUES
+	('Colón Costarricense', 'CRC', '₡', 1),
+    ('Dólar Estadounidense', 'USD', '$', 2);
+    
+-- Inserción del exhange rate entre el colón y el dólar
+INSERT INTO pay_exchange_currencies (source_id, destiny_id, start_date, exchange_rate)
+VALUES (1, 2, '2025-03-21', 492.00);
+
 -- call llenarDireccionesPorUsuario();
 -- call llenarNombres();
 -- call llenarDirecciones();
+
 
 
 DELIMITER //
