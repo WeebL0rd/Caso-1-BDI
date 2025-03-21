@@ -76,10 +76,50 @@ INSERT INTO pay_currencies (`name`, acronym, symbol, country_id) VALUES
 INSERT INTO pay_exchange_currencies (source_id, destiny_id, start_date, exchange_rate)
 VALUES (1, 2, '2025-03-21', 492.00);
 
--- call llenarDireccionesPorUsuario();
--- call llenarNombres();
--- call llenarDirecciones();
-
+-- Inserción de la severidad de los logs, sources, y tipos
+INSERT INTO pay_logs_severity (`name`) VALUES
+	('DEBUG'),
+    ('INFO'),
+    ('WARNING'),
+    ('ERROR');
+INSERT INTO pay_log_sources (`name`) VALUES
+	('Aplicación'),
+    ('Base de datos'),
+    ('Usuario'),
+    ('Sistema');
+INSERT INTO pay_log_types (`name`) VALUES
+	('Transaction'),
+    ('Error'),
+    ('Access'),
+    ('Configuration');
+    
+-- Procedure para llenar logs
+DELIMITER //
+CREATE PROCEDURE llenarLogs()
+BEGIN
+	DECLARE i INT DEFAULT 1;
+    DECLARE randNum INT DEFAULT 1;
+    
+    WHILE i <= 100 DO
+		-- Hace un número random de usuario al que le va a registrar el log
+        SET randNum = FLOOR(RAND() * (40 - 1 + 1)) + 1;
+    
+		INSERT INTO pay_logs (`description`, postTime, computer, username, trace, `checksum`, log_severity_id, log_types_id, log_sources_id) VALUES (
+        'Usuario entró a la app',
+        CURDATE(),
+        'Dispositivo móvil',
+        CONCAT('usuario_', randnum),
+        CONCAT('trace_', i),
+        '132abcchecksum',
+        2, 
+        3,
+        1
+        );
+        
+        SET i = i + 1;
+    END WHILE;
+END //
+DELIMITER ;
 
 
 DELIMITER //
@@ -89,4 +129,8 @@ BEGIN
 END //
 DELIMITER ;
 
+-- call llenarDireccionesPorUsuario();
+-- call llenarNombres();
+-- call llenarDirecciones();
+-- call llenarLogs();
 
