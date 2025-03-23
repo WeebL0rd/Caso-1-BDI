@@ -25,7 +25,6 @@ DELIMITER ;
 
 call llenarNombres();
 
-SELECT * FROM pay_users;
 
 -- Inserción de países, estados y ciudades
 INSERT INTO pay_countries (`name`) VALUES
@@ -86,7 +85,6 @@ DELIMITER ;
 
 call llenarDirecciones();
 
-SELECT * FROM pay_addresses;
 
 -- Procedure para insertar direcciones de usuarios
 DELIMITER //
@@ -193,7 +191,6 @@ DELIMITER ;
 
 call subscripcionesPorUsuario();
     
-SELECT * FROM pay_users_plan_prices;
 
 -- Inserción de la severidad de los logs, sources, y tipos
 INSERT INTO pay_logs_severity (`name`) VALUES
@@ -276,7 +273,6 @@ DELIMITER ;
 
 call llenarLogs();
 
-SELECT * FROM pay_logs;
 
 DELIMITER //
 CREATE PROCEDURE llenarLogsEventos()
@@ -360,9 +356,6 @@ END //
 DELIMITER ;
 
 CALL llenarLogsEventos();
-
-SELECT * FROM pay_logs
-WHERE log_severity_id = 4 AND log_types_id = 4 AND log_sources_id = 4;
 
 DELIMITER //
 CREATE PROCEDURE llenar()
