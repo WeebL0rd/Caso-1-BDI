@@ -109,7 +109,7 @@ INSERT INTO pay_currencies (`name`, acronym, symbol, country_id) VALUES
     
 -- Inserción del exhange rate entre el colón y el dólar
 INSERT INTO pay_exchange_currencies (source_id, destiny_id, start_date, exchange_rate)
-VALUES (1, 2, '2025-03-21', 492.00);
+VALUES (2, 1, '2025-03-21', 492.00);
 
 -- Inserción de las subscripciones
 INSERT INTO pay_assistant_db.pay_subscriptions (description) VALUES
@@ -278,8 +278,91 @@ call llenarLogs();
 
 SELECT * FROM pay_logs;
 
+DELIMITER //
+CREATE PROCEDURE llenarLogsEventos()
+BEGIN
+	DECLARE i INT DEFAULT 1;
+    DECLARE randnum INT DEFAULT 1;
+    
+    WHILE i <= 40 DO
+		-- Al randnum se le va a asignar un número aleatorio que será el número de errores que habrán del registro de un pago recurrente
+        SET randnum = FLOOR(RAND() * 20);
+        
+        SET @postTime = NULL;
+		SET @postTime = DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 480) DAY); -- Fecha aleatoria en los últimos 200 días
+		SET @postTime = DATE_ADD(DATE(@postTime), INTERVAL FLOOR(RAND() * 24) HOUR);
+		SET @postTime = DATE_ADD(@postTime, INTERVAL FLOOR(RAND() * 60) MINUTE);
+        
+        SET @dispositivo = NULL;
+		SELECT ELT(FLOOR(1 + RAND() * 6), 'Laptop', 'Smartphone', 'Tablet', 'PC', 'Smartwatch', 'Servidor') INTO @dispositivo;
+        
+        
+        WHILE randnum > 0 DO
+        
+			SET @descripcion = NULL;
+			SELECT ELT(FLOOR(1 + RAND() * 35), 
+				'Fallo de interpretación de voz demasiado baja',  
+				'Fallo de interpretación por pronunciación ambigua',  
+				'Fallo por superposición de voces en el audio',  
+				'Fallo por cortes en la grabación de voz',  
+				'Fallo por error en la separación de palabras',  
+				'Fallo por ruido de fondo demasiado alto',  
+				'Fallo por interferencia de otros sonidos (música, claxon, etc.)',  
+				'Fallo por eco en el audio que distorsiona palabras',  
+				'Fallo por voz entrecortada debido a mala calidad del micrófono',  
+				'Fallo por distorsión del audio en la compresión',  
+				'Fallo por sobrecarga en el volumen del audio',  
+				'Fallo por confusión entre nombres similares',  
+				'Fallo por nombre dividido en dos partes por error',  
+				'Fallo por interpretación errónea de un nombre común',  
+				'Fallo por confusión con apellidos',   
+				'Fallo por inclusión de caracteres no válidos en el nombre',  
+				'Fallo por cifras numéricas mal interpretadas',  
+				'Fallo por conversión errónea de moneda',  
+				'Fallo por error en la transcripción de montos decimales',  
+				'Fallo por separadores de miles mal reconocidos',  
+				'Fallo por omisión de un número en la transcripción',  
+				'Fallo por detección de datos financieros incorrectos',  
+				'Fallo por confusión entre cantidades y conceptos',  
+				'Fallo por método de pago inexistente o no soportado',  
+				'Fallo por confusión entre tarjetas de crédito y débito',  
+				'Fallo por no detección de la plataforma de pago correcta',  
+				'Fallo por omisión del banco asociado al método de pago',  
+				'Fallo por error en la interpretación del número de cuenta',  
+				'Fallo por confusión entre fechas escritas con distintos formatos',  
+				'Fallo por error en la conversión de fechas habladas a texto',  
+				'Fallo por interpretación errónea de una fecha en palabras',  
+				'Fallo por confusión entre meses con nombres similares',  
+				'Fallo por error en la interpretación de fechas repetitivas',  
+				'Fallo por pérdida de datos en la transcripción',   
+				'Fallo por fallo en la normalización del audio antes de la interpretación'  
+			) INTO @descripcion;
+        
+			INSERT INTO pay_logs (`description`, postTime, computer, username, trace, `checksum`, referenceId1, referenceId2, log_severity_id, log_types_id, log_sources_id) VALUES (
+				@descripcion,
+                @postTime,
+                @dispositivo,
+                CONCAT('usuario_', i),
+                'Pagos Recurrentes',
+                SHA2(CONCAT('Fallo de interpretación',DATE_FORMAT(@postTime, '%Y-%m-%d %H:%i:%s'),@dispositivo, CONCAT('usuario_', i), i, i, 'Pagos Recurrentes'), 512),
+                i, -- user_id
+                i, -- recurrent_payment_id
+                4, -- severity: ERROR
+                4, -- log type: Configuration
+                4); -- source: Sistema
+                
+			-- A la fecha cambiarle los minutos para que sean diferentes en el mismo día
+            SET @postTime = DATE_ADD(@postTime, INTERVAL FLOOR(RAND() * 60) MINUTE);
+            SET randnum = randnum - 1;
+        END WHILE;
+    END WHILE;
+END //
+DELIMITER ;
 
+CALL llenarLogsEventos();
 
+SELECT * FROM pay_logs
+WHERE log_severity_id = 4 AND log_types_id = 4 AND log_sources_id = 4;
 
 DELIMITER //
 CREATE PROCEDURE llenar()
@@ -288,8 +371,4 @@ BEGIN
 END //
 DELIMITER ;
 
--- call llenarDireccionesPorUsuario();
--- call llenarNombres();
--- call llenarDirecciones();
--- call llenarLogs();
 
