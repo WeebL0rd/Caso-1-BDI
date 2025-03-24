@@ -11,7 +11,7 @@ José Julián Monge Brenes 2024247024
 
 [Script de llenado de datos](Generation%20script.sql)
 
-[Script de queries](Query%Script.sql)
+[Script de queries](Query%20Script.sql)
 
 ## Queries
 
