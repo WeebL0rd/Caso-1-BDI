@@ -118,8 +118,8 @@ INSERT INTO pay_assistant_db.pay_subscriptions (description) VALUES
 -- Inserción de los precios de subscripciones por mes
 INSERT INTO pay_assistant_db.pay_plan_prices (subscrition_Id, amount, currency_id, postTime, endDate) VALUES
     (1, 9.99, 2, NOW(), '2025-12-31'),
-    (2, 9.99, 2, NOW(), '2025-12-31'),
-    (3, 19.99, 2, NOW(), '2025-12-31');
+    (2, 19.99, 2, NOW(), '2025-12-31'),
+    (3, 29.99, 2, NOW(), '2025-12-31');
 
     
 -- Inserción de los beneficios por los planes
@@ -174,13 +174,7 @@ BEGIN
                 @mensual
                 );
             
-            SET @fechaSub = DATE_ADD(@fechaSub, INTERVAL 1 MONTH);  -- Suma un mes
-            -- Cambiar si es necesario crear un schedule para cada plan y ver cual es el que tiene
-			-- IF @mensual = 1 THEN
-				-- SET @fechaSub = DATE_ADD(@fechaSub, INTERVAL 1 MONTH);  -- Suma un mes
-			-- ELSE
-				-- SET @fechaSub = DATE_ADD(@fechaSub, INTERVAL 1 YEAR);   -- Suma un año
-			-- END IF;
+            SET @fechaSub = DATE_ADD(@fechaSub, INTERVAL 1 MONTH);
 		END WHILE;
         
         
@@ -208,7 +202,7 @@ INSERT INTO pay_log_types (`name`,reference1_description) VALUES
     ('Error', 'UserId'),
     ('Access', 'UserId'),
     ('Configuration', 'UserId');
-INSERT INTO pay_log_types (`name`,reference1_description,reference2_description) VALUES ('Payment configuration', 'UserId', 'AnalyzedTextsID');
+INSERT INTO pay_log_types (`name`,reference1_description,reference2_description) VALUES ('Payment AI configuration', 'user_id', 'analyzed_text_id');
 
     
 -- Procedure para llenar logs
@@ -334,7 +328,7 @@ BEGIN
 			@postTime,
 			@dispositivo,
 			CONCAT('usuario_', MOD(i,40)),
-			'Pagos Recurrentes',
+			'Pagos Recurrentes IA',
 			SHA2(CONCAT('Fallo de interpretación',DATE_FORMAT(@postTime, '%Y-%m-%d %H:%i:%s'),@dispositivo, CONCAT('usuario_', MOD(i,40)), MOD(i,40), i, 'Pagos Recurrentes'), 512),
 			MOD(i,40), -- user_id
 			i, -- analyzed_text_id
