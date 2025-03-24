@@ -517,7 +517,7 @@ CREATE TABLE IF NOT EXISTS `pay_assistant_db`.`pay_exchange_currencies` (
   `source_id` INT NOT NULL,
   `destiny_id` INT NOT NULL,
   `start_date` DATE NOT NULL,
-  `end_date` DATE NOT NULL,
+  `end_date` DATE NULL,
   `exchange_rate` DECIMAL(12,3) NOT NULL,
   `enabled` BIT(1) NOT NULL DEFAULT 1,
   `current_exchange` BIT(1) NOT NULL DEFAULT 1,
@@ -584,15 +584,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `pay_assistant_db`.`pay_users_plan_prices` ;
 
 CREATE TABLE IF NOT EXISTS `pay_assistant_db`.`pay_users_plan_prices` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `user_plan_price_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
   `plan_prices_id` INT NOT NULL,
   `adquision` DATE NOT NULL,
   `enabled` BIT(1) NOT NULL,
   `schedule_id` INT NOT NULL,
-  PRIMARY KEY (`user_id`, `plan_prices_id`),
   INDEX `fk_pay_users_has_pay_plan_prices_pay_plan_prices1_idx` (`plan_prices_id` ASC) VISIBLE,
   INDEX `fk_pay_users_has_pay_plan_prices_pay_users1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_pay_users_plan_prices_pay_schedules1_idx` (`schedule_id` ASC) VISIBLE,
+  PRIMARY KEY (`user_plan_price_id`),
   CONSTRAINT `fk_pay_users_has_pay_plan_prices_pay_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `pay_assistant_db`.`pay_users` (`user_id`)
