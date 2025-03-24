@@ -9,9 +9,9 @@ José Julián Monge Brenes 2024247024
 
 [Script de la creación de la base de datos](Creation%20script.sql)
 
-[Script de llenado de datos](Generatio%20script.sql)
+[Script de llenado de datos](Generation%20script.sql)
 
-[Script de queries](Query%script.sql)
+[Script de queries](Query%Script.sql)
 
 ## Queries
 
