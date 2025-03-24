@@ -342,11 +342,4 @@ DELIMITER ;
 
 CALL llenarLogsEventos();
 
-DELIMITER //
-CREATE PROCEDURE llenar()
-BEGIN
-
-END //
-DELIMITER ;
-
 
