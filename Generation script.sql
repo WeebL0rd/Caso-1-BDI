@@ -208,6 +208,8 @@ INSERT INTO pay_log_types (`name`,reference1_description) VALUES
     ('Error', 'UserId'),
     ('Access', 'UserId'),
     ('Configuration', 'UserId');
+INSERT INTO pay_log_types (`name`,reference1_description,reference2_description) VALUES ('Payment configuration', 'UserId', 'AnalyzedTextsID');
+
     
 -- Procedure para llenar logs
 DELIMITER //
@@ -337,7 +339,7 @@ BEGIN
 			MOD(i,40), -- user_id
 			i, -- analyzed_text_id
 			4, -- severity: ERROR
-			4, -- log type: Configuration
+			5, -- log type: Payment configuration
 			4); -- source: Sistema
         SET i = i + 1;
     END WHILE;

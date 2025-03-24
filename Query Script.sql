@@ -48,6 +48,6 @@ LIMIT 15;
 -- Query de problemas que hay en hacer que la AI determine correctamente lo que se desea hacer desde el 1 día del 2025
 SELECT `description` AS problemas, COUNT(1) AS total_problemas
 FROM pay_logs l
-WHERE DATEDIFF('2025-01-01', l.postTime) > 0
+WHERE DATEDIFF('2025-01-01', l.postTime) > 0 AND l.log_types_id = 5
 GROUP BY l.description
 ORDER BY total_problemas DESC;
