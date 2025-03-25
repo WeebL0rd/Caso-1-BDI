@@ -13,6 +13,8 @@ José Julián Monge Brenes 2024247024
 
 [Script de queries](Query%20Script.sql)
 
+[Diagrama Completo](Diagrama_Caso1.pdf)
+
 ## Queries
 
 Listar todos los usuarios de la plataforma que esten activos con su nombre completo, email, país de procedencia, y el total de cuánto han pagado en subscripciones desde el 2024 hasta el día de hoy, dicho monto debe ser en colones (20+ registros)
